@@ -1,7 +1,5 @@
 import React from "react";
-import axios from "axios";
 import Checkbox, { CheckboxProps } from "./Checkbox";
-import { API_ENDPOINT, authHeader, Prefecture } from "@/api";
 
 type Props = {
   prefList: CheckboxProps[];
@@ -22,6 +20,7 @@ const PrefectureList = ({
     (props: CheckboxProps) => {
       setPrefList((state) =>
         state.map((v) =>
+          // eslint-disable-next-line react/prop-types
           v.prefCode === props.prefCode ? { ...v, selected: !v.selected } : v
         )
       );
@@ -31,7 +30,7 @@ const PrefectureList = ({
 
   if (reqStt === "success")
     return (
-      <div>
+      <div className="grid-container">
         {prefList.map((prop) => (
           <Checkbox key={prop.prefCode} {...prop} onClick={onClickCheckBox} />
         ))}

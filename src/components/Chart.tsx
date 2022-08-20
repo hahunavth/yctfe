@@ -10,8 +10,8 @@ import {
   Tooltip,
   Legend,
   ResponsiveContainer,
-  LineProps,
 } from "recharts";
+import { useMediaQuery } from "react-responsive";
 
 type Props = {
   prefectureList: Prefecture[];
@@ -38,9 +38,24 @@ const colors: string[] = [
 ];
 
 const Chart = (props: Props) => {
-  const [res, setRes] = React.useState<{ [k: string]: Population[] }>({});
+  // NOTE ONLY FOR CHART LIBRARY
+  const isMobileDevice = useMediaQuery({
+    query: "(max-device-width: 600px)",
+  });
 
-  console.log("chart");
+  const style = React.useMemo(() => {
+    if (isMobileDevice) {
+      return {
+        fontSize: 10,
+      };
+    } else {
+      return {
+        fontSize: 15,
+      };
+    }
+  }, [isMobileDevice]);
+
+  const [res, setRes] = React.useState<{ [k: string]: Population[] }>({});
 
   const data = React.useMemo<ChartData>(() => {
     const newData: ChartData = [];
@@ -78,10 +93,6 @@ const Chart = (props: Props) => {
         const name = prefecture.prefName;
         const data = response.data?.result.data[0].data as Population[];
         setRes((res) => ({ ...res, [name]: data }));
-        // setRes((res) => {
-        //   res[name] = data;
-        //   return res;
-        // });
       } catch (e) {
         console.log(e);
       }
@@ -93,38 +104,36 @@ const Chart = (props: Props) => {
     Promise.all(props.prefectureList.map((pre) => getPopulationList(pre)));
   }, [getPopulationList, props.prefectureList]);
 
-  console.log(res);
-
   return (
     <ResponsiveContainer width="100%" height="100%">
       <LineChart
-        width={500}
-        height={300}
         data={data}
         margin={{
-          top: 40,
-          right: 50,
-          left: 50,
-          bottom: 25,
+          top: 28,
+          right: 4,
+          left: 8,
+          bottom: 24,
         }}
       >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis
           dataKey="year"
-          // label="jinkousuu"
           label={{
             value: "jinkousuu",
             position: "insideBottomRight",
-            offset: -20,
+            offset: -10,
+            fontSize: style.fontSize,
           }}
+          fontSize={style.fontSize}
         />
         <YAxis
           label={{
             value: "jinkousuu",
             position: "insideTopLeft",
-            // angle: -90,
-            offset: -30,
+            offset: -20,
+            fontSize: style.fontSize,
           }}
+          fontSize={style.fontSize}
         />
         <Tooltip />
         <Legend verticalAlign="top" layout="vertical" align="right" />
@@ -144,16 +153,3 @@ const Chart = (props: Props) => {
 };
 
 export default Chart;
-
-type MemoLineProps = {
-  key: number;
-  dataKey: string;
-  stroke: string;
-};
-
-const MemoLine = React.memo((props: MemoLineProps) => {
-  return <Line {...props} type="monotone" />;
-});
-// function MemoLine(props: LineProps) {
-//   return <Line {...props} />;
-// }

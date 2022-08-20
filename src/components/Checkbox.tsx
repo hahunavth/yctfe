@@ -6,16 +6,17 @@ export type CheckboxProps = Prefecture & {
   onClick?: (props: CheckboxProps) => void;
 };
 
-const Checkbox = React.memo((props: CheckboxProps) => {
+const Checkbox = React.memo(function Check(props: CheckboxProps) {
   return (
-    <span style={{ padding: "10px" }}>
+    <label className="grid-item">
       <input
+        id={props.prefName}
         type={"checkbox"}
         checked={props.selected || false}
         onChange={() => props.onClick && props.onClick(props)}
       />
-      <span>{props.prefName}</span>
-    </span>
+      {props.prefName}
+    </label>
   );
 });
 
