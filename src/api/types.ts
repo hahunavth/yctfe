@@ -1,9 +1,9 @@
 export type Prefecture = {
-  prefCode: number;
-  prefName: string;
-};
+  prefCode: number
+  prefName: string
+}
 
 export type Population = {
-  year: number;
-  value: number;
-};
+  year: number
+  value: number
+}

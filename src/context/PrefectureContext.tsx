@@ -1,6 +1,6 @@
 import React, { ReactNode } from 'react'
 import axios from 'axios'
-import { API_ENDPOINT, authHeader, Prefecture } from '@/api'
+import { API_ENDPOINT, authHeader, getAPIPrefectures, Prefecture } from '@/api'
 import { CheckboxProps } from '@/components/Checkbox'
 
 type Props = {
@@ -25,11 +25,8 @@ export default function PrefectureProvider(props: Props) {
 
   React.useEffect(() => {
     if (reqStt === 'loading')
-      (async () => {
-        axios
-          .get(`${API_ENDPOINT}api/v1/prefectures`, {
-            headers: authHeader,
-          })
+      (() => {
+        getAPIPrefectures()
           .then((response) => {
             setReqStt('success')
             const result = response.data?.result as Prefecture[]
