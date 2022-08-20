@@ -3,20 +3,20 @@ import React from "react";
 
 export type CheckboxProps = Prefecture & {
   selected?: boolean;
-  onClick?: () => any;
+  onClick?: (props: CheckboxProps) => void;
 };
 
-const Checkbox = (props: CheckboxProps) => {
+const Checkbox = React.memo((props: CheckboxProps) => {
   return (
     <span style={{ padding: "10px" }}>
       <input
         type={"checkbox"}
         checked={props.selected || false}
-        onChange={props.onClick}
+        onChange={() => props.onClick && props.onClick(props)}
       />
       <span>{props.prefName}</span>
     </span>
   );
-};
+});
 
 export default Checkbox;
