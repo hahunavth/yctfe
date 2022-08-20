@@ -1,6 +1,5 @@
 import React, { ReactNode } from 'react'
-import axios from 'axios'
-import { API_ENDPOINT, authHeader, getAPIPrefectures, Prefecture } from '@/api'
+import { getAPIPrefectures, Prefecture } from '@/api'
 import { CheckboxProps } from '@/components/Checkbox'
 
 type Props = {

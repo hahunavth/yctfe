@@ -1,4 +1,4 @@
-import { API_ENDPOINT, authHeader, getAPIPopulation, Population, Prefecture } from '@/api'
+import { getAPIPopulation, Population, Prefecture } from '@/api'
 import React from 'react'
 import {
   LineChart,
@@ -106,20 +106,25 @@ const Chart = (props: Props) => {
         <CartesianGrid strokeDasharray='3 3' />
         <XAxis
           dataKey='year'
+          padding={{ right: 32 }}
           label={{
-            value: 'jinkousuu',
+            value: '年度',
             position: 'insideBottomRight',
-            offset: -10,
+            offset: -2,
             fontSize: style.fontSize,
+            fontWeight: 600,
+            lineHeight: 100,
           }}
           fontSize={style.fontSize}
         />
         <YAxis
+          padding={{ top: 48 }}
           label={{
-            value: 'jinkousuu',
+            value: '人口数',
             position: 'insideTopLeft',
-            offset: -20,
+            // offset: -12,
             fontSize: style.fontSize,
+            fontWeight: 600,
           }}
           fontSize={style.fontSize}
         />
