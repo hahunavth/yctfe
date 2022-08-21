@@ -1,14 +1,12 @@
 import React from 'react'
+import { PrefectureContextValue } from '@/context/PrefectureContext'
 import Checkbox, { CheckboxProps } from './Checkbox'
 
-type Props = {
-  prefList: CheckboxProps[]
-  reqStt: 'success' | 'fail' | 'loading'
-  setPrefList: React.Dispatch<React.SetStateAction<CheckboxProps[]>>
-  setReqStt: React.Dispatch<React.SetStateAction<'success' | 'fail' | 'loading'>>
-}
-
-const PrefectureList = ({ prefList, reqStt, setPrefList, setReqStt }: Props) => {
+/**
+ * render list of prefecture checkbox
+ */
+const PrefectureList = ({ prefList, reqStt, setPrefList, setReqStt }: PrefectureContextValue) => {
+  // on click checkbox, set selected = true
   const onClickCheckBox = React.useCallback(
     (props: CheckboxProps) => {
       setPrefList((state) =>
@@ -23,6 +21,7 @@ const PrefectureList = ({ prefList, reqStt, setPrefList, setReqStt }: Props) => 
 
   if (reqStt === 'success')
     return (
+      // render list
       <div className='grid-container'>
         {prefList.map((prop) => (
           <Checkbox key={prop.prefCode} {...prop} onClick={onClickCheckBox} />
@@ -30,6 +29,7 @@ const PrefectureList = ({ prefList, reqStt, setPrefList, setReqStt }: Props) => 
       </div>
     )
   else if (reqStt === 'fail') {
+    // if fail load API -> show reload button
     return (
       <div>
         <div>Load failed!</div>
@@ -37,6 +37,7 @@ const PrefectureList = ({ prefList, reqStt, setPrefList, setReqStt }: Props) => 
       </div>
     )
   } else {
+    // loading
     return <div>Loading</div>
   }
 }

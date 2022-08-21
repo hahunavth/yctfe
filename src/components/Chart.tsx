@@ -1,5 +1,5 @@
-import { getAPIPopulation, Population, Prefecture } from '@/api'
 import React from 'react'
+import { getAPIPopulation, Population, Prefecture } from '@/api'
 import {
   LineChart,
   Line,
@@ -16,13 +16,19 @@ type Props = {
   prefectureList: Prefecture[]
 }
 
+/**
+ * ChartItem: Data structure to render chart
+ * - year: The unique id of x-axis.
+ * - key: The key or getter of a group of data which should be unique in a LineChart
+ *
+ * FIXME: Add or remove line cause all of lines rerender
+ */
 type ChartItem = {
   year: number
   [key: string]: number
 }
 
-type ChartData = ChartItem[]
-
+// line chart with many color
 const colors: string[] = [
   '#82ca9d',
   '#E0BBE4',
@@ -37,11 +43,12 @@ const colors: string[] = [
 ]
 
 const Chart = (props: Props) => {
-  // NOTE ONLY FOR CHART LIBRARY
+  // NOTE: only for chart library
+  // use css in js
   const isMobileDevice = useMediaQuery({
     query: '(max-device-width: 600px)',
   })
-
+  // responsive style
   const style = React.useMemo(() => {
     if (isMobileDevice) {
       return {
@@ -54,10 +61,13 @@ const Chart = (props: Props) => {
     }
   }, [isMobileDevice])
 
+  // res: api response
   const [res, setRes] = React.useState<{ [k: string]: Population[] }>({})
 
-  const data = React.useMemo<ChartData>(() => {
-    const newData: ChartData = []
+  // data: chart render data structure
+  // -> data change when res change
+  const data = React.useMemo<ChartItem[]>(() => {
+    const newData: ChartItem[] = []
     for (const key in res) {
       for (const population of res[key]) {
         const populationYearIndex = newData.findIndex((item) => item.year === population.year)
@@ -81,7 +91,7 @@ const Chart = (props: Props) => {
     try {
       const response = await getAPIPopulation(prefecture.prefCode)
       const name = prefecture.prefName
-      const data = response.data?.result.data[0].data as Population[]
+      const data = response.data?.result?.data[0].data as Population[]
       setRes((res) => ({ ...res, [name]: data }))
     } catch (e) {
       console.log(e)
@@ -89,6 +99,7 @@ const Chart = (props: Props) => {
   }, [])
 
   React.useEffect(() => {
+    // call api to get population info of selected prefecture and set state
     Promise.all(props.prefectureList.map((pre) => getPopulationList(pre)))
   }, [getPopulationList, props.prefectureList])
 
@@ -123,7 +134,6 @@ const Chart = (props: Props) => {
           label={{
             value: '人口数',
             position: 'insideTopLeft',
-            // offset: -12,
             fontSize: style.fontSize,
             fontWeight: 600,
           }}
@@ -131,6 +141,7 @@ const Chart = (props: Props) => {
         />
         <Tooltip />
         <Legend verticalAlign='top' layout='vertical' align='right' />
+        {/* multiple line charts */}
         {props.prefectureList.map((pre, id) => (
           <Line
             key={pre.prefCode}

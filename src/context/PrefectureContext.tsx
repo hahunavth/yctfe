@@ -6,7 +6,7 @@ type Props = {
   children: ReactNode
 }
 
-type PrefectureContextValue = {
+export type PrefectureContextValue = {
   reqStt: 'success' | 'fail' | 'loading'
   prefList: CheckboxProps[]
   setReqStt: React.Dispatch<React.SetStateAction<'success' | 'fail' | 'loading'>>
