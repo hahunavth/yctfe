@@ -1,15 +1,17 @@
 import React from 'react'
-import './App.css'
-import PrefectureList from './components/PrefectureList'
-import Chart from './components/Chart'
-import PrefectureProvider, { PrefectureContext } from './context/PrefectureContext'
+import '@/App.css'
+import PrefectureProvider, { PrefectureContext } from '@/context/PrefectureContext'
+import PrefectureList from '@/components/PrefectureList'
+import Chart from '@/components/Chart'
 
 function App() {
   return (
     <PrefectureProvider>
+      {/* Nav bar */}
       <nav className='navbar'>
         <h1>Title</h1>
       </nav>
+      {/* List of prefectures */}
       <div className='container'>
         <div className='block'>
           <h3>部道府県</h3>
@@ -24,6 +26,7 @@ function App() {
             )}
           </PrefectureContext.Consumer>
         </div>
+        {/* chart */}
         <div className='block block--chart'>
           <PrefectureContext.Consumer>
             {(context) => (

@@ -116,6 +116,7 @@ const Chart = (props: Props) => {
             lineHeight: 100,
           }}
           fontSize={style.fontSize}
+          // allowDuplicatedCategory={false}
         />
         <YAxis
           padding={{ top: 48 }}

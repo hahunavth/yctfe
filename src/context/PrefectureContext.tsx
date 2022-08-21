@@ -13,16 +13,26 @@ type PrefectureContextValue = {
   setPrefList: React.Dispatch<React.SetStateAction<CheckboxProps[]>>
 }
 
+/**
+ * PrefectureContext:
+ * - create context for manage app state
+ * - pass default value null to ignore type check
+ */
 export const PrefectureContext = React.createContext<PrefectureContextValue>(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   null as any,
 )
 
+/**
+ * PrefectureProvider:
+ * - wrap App component
+ */
 export default function PrefectureProvider(props: Props) {
   const [reqStt, setReqStt] = React.useState<'success' | 'fail' | 'loading'>('loading')
   const [prefList, setPrefList] = React.useState<CheckboxProps[]>([])
 
   React.useEffect(() => {
+    // fetch prefectures in first time component render
     if (reqStt === 'loading')
       (() => {
         getAPIPrefectures()
