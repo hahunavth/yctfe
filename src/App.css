@@ -3,10 +3,15 @@ h1 {
   margin:auto;
   line-height:51px;
   vertical-align:middle;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 500;
+  font-size: 24px;
 }
 
 h3 {
   font-size: 15px;
+  font-weight: 600;
+  margin: 8px;
 }
 
 /* Layout */
@@ -20,6 +25,7 @@ h3 {
 .container {
   width: '100%';
   padding-top: 8em;
+  margin: 0 8px;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -75,6 +81,6 @@ h3 {
   }
 
   h3 {
-    font-size: 12px;
+    font-size: 11px;
   }
 }
