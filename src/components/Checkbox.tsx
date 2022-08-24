@@ -14,12 +14,13 @@ const Checkbox = React.memo(function Check(props: CheckboxProps) {
   return (
     <label className='grid-item'>
       <input
+        className='checkbox'
         id={props.prefName}
         type={'checkbox'}
         checked={props.selected || false}
         onChange={() => props.onClick && props.onClick(props)}
       />
-      {props.prefName}
+      <span className='checkbox-label'>{props.prefName}</span>
     </label>
   )
 })
